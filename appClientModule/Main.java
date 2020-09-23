@@ -3,74 +3,84 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class Main {
 	public static void main(String[] args) throws IOException {
-		BufferedReader reader =  
-                new BufferedReader(new InputStreamReader(System.in)); 
+		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 		int numberN, numberS, numberL;
-		
 		List<InputSquare> S = new ArrayList<InputSquare>();
 		List<Integer> L = new ArrayList<Integer>();
-		// TODO Auto-generated method stub
-		System.out.print( "Enter N: " );
+		
+		System.out.print("Enter N: ");
 		numberN = Integer.parseInt(reader.readLine());
-		
-		System.out.print( "Enter S: " );
+		Square square = new Square(numberN);
+
+		System.out.print("Enter S: ");
 		numberS = Integer.parseInt(reader.readLine());
-		
+
 		int count = 0;
 		while (count < numberS) {
-			String tempString = reader.readLine();			
+			String tempString = reader.readLine();
 			String[] tempList = tempString.split(" ");
-			if(tempList.length != 3) {				
+			if (tempList.length != 3) {
 				continue;
 			}
-			
+
 			List<Integer> temp = new ArrayList<Integer>();
 			for (String a : tempList) {
-				try
-			    {
-			       int i = Integer.parseInt(a);
-			       temp.add(i);
-			    }
-			    catch (NumberFormatException nfe)
-			    {
-			      	continue;
-			    }
+				try {
+					int i = Integer.parseInt(a);
+					temp.add(i);
+				} catch (NumberFormatException nfe) {
+					continue;
+				}
 			}
-			
-			S.add(new InputSquare(numberN, temp.get(0), temp.get(1), temp.get(2)));	
+
+			S.add(new InputSquare(temp.get(0), temp.get(1), temp.get(2)));
 			count++;
 		}
-		
-		S.add(new InputSquare(numberN, 1, 2, 3));		
-		
-		for(int i = 0; i < S.size(); i++) {
-			drawSquare(S.get(i).getLargeSquare());
-        }
+
+		System.out.print("Enter L: ");
+		numberL = Integer.parseInt(reader.readLine());
+		int countL = 0;
+		while (countL < numberL) {
+			try {
+				int value = Integer.parseInt(reader.readLine());
+				L.add(value);
+				countL++;
+			} catch (NumberFormatException nfe) {
+				System.out.println("Fail");
+				break;
+			}
+		}
+
+		for (int i = 0; i < S.size(); i++) {
+			InputSquare inputSquare = S.get(i);
+			int xStart = inputSquare.getA();
+			int yStart = inputSquare.getB();
+			int size = inputSquare.getD();
+			square.rotateSquare(xStart, yStart, size);
+		}
+		System.out.println("Final square: ");
+		square.draw();
+		System.out.println("Find index: ");
+		for (int i = 0; i < L.size(); i++) {
+			int[] result = square.getIndexOfValue(L.get(i));
+			System.out.format("index of %d: %d, %d", L.get(i), result[0], result[1]);
+			System.out.println();
+		}
 	}
 
-	/* (non-Java-doc)
+	public void handleInput() {
+
+	}
+
+	/*
+	 * (non-Java-doc)
+	 * 
 	 * @see java.lang.Object#Object()
 	 */
 	public Main() {
 		super();
 	}
-	
-	public static void drawSquare(int[][]square) {
-		int i, j;
-		int length = square.length;
-		
-		for(i = 0; i < length; i++)
-		{
-			for(j = 0; j < length; j++)
-			{
-				System.out.print(square[i][j] + " ");
-			}
-			System.out.println("\n"); 
-		}
-	}
 }
-
