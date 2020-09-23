@@ -40,18 +40,6 @@ public class Square {
 		int lengthCustom = newSquare.length - 1;
 		for (i = 0; i <= lengthCustom / 2; i++) {
 			for (j = i; j < lengthCustom - i; j++) {
-				// i = 0 && j = 1
-				// [0][1] = [i][j]
-				// [2][0] = [lengthCustom - j][i]
-				// [3][2] = [lengthCustom - i][lengthCustom - j]
-				// [1][3] = [j][lengthCustom - i]
-//				System.out.format("[i][j] - [%d][%d]", i,j);
-//				System.out.println();
-//				System.out.format("[lengthCustom - i][j] - [%d][%d]", lengthCustom - i,j);
-//				System.out.println();
-//				System.out.format("[lengthCustom - i][lengthCustom - j] - [%d][%d]", lengthCustom - i,lengthCustom - j);
-//				System.out.println();
-//				System.out.format("[j][lengthCustom - x] - [%d][%d]", i,j);
 				newSquare[i][j] = currentSquare[lengthCustom - j][i];
 				newSquare[lengthCustom - j][i] = currentSquare[lengthCustom - i][lengthCustom - j];
 				newSquare[lengthCustom - i][lengthCustom - j] = currentSquare[j][lengthCustom - i];
